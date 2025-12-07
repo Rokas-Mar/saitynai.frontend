@@ -5,6 +5,9 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const token = localStorage.getItem("accessToken");
+if (token) api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
 export function setAuthToken(token) {
   if (token) api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   else delete api.defaults.headers.common["Authorization"];
@@ -34,12 +37,7 @@ api.interceptors.response.use(
         if (!isRefreshing) {
           isRefreshing = true;
 
-          const res = await axios.post(
-            `${import.meta.env.VITE_API_BASE_URL}/auth/refresh`,
-            null,
-            { withCredentials: true }
-          );
-
+          const res = await api.post("/auth/refresh");
           const newToken = res.data.accessToken;
 
           localStorage.setItem("accessToken", newToken);
@@ -57,7 +55,7 @@ api.interceptors.response.use(
             resolve(api(original));
           });
         });
-      } catch (e) {
+      } catch {
         isRefreshing = false;
         localStorage.clear();
         window.location.href = "/login";
