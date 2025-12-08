@@ -1,8 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import api, { setAuthToken } from "../api/client.js";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
+  const navigate = useNavigate();
+
   const [token, setToken] = useState(
     () => localStorage.getItem("accessToken") || ""
   );
@@ -26,6 +30,7 @@ export function AuthProvider({ children }) {
 
   const login = (jwtToken, roleFromToken, displayName) => {
     setToken(jwtToken);
+    setAuthToken(jwtToken);
     setRole(roleFromToken);
     setUserName(displayName);
   };
@@ -36,9 +41,12 @@ export function AuthProvider({ children }) {
     } catch (e) {
       console.error(e);
     }
+
     localStorage.clear();
     setAuthToken(null);
-    logout();
+    setToken("");
+    setRole("");
+    setUserName("");
     navigate("/login");
   };
 
