@@ -79,9 +79,7 @@ export default function LoginForm() {
 
         <button
           type="submit"
-          className={
-            "btn btn-primary btn-full" + (isLoading ? " isloading" : "")
-          }
+          className={`btn btn-primary btn-full${isLoading ? " isloading" : ""}`}
           disabled={isLoading}
         >
           Prisijungti

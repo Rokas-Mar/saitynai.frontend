@@ -636,5 +636,6 @@ input[type="number"]:focus {
 
   .user-info {
     display: none;
+    pointer-events: none;
   }
 }
