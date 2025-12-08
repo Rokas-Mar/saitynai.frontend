@@ -10,12 +10,14 @@ export default function LoginForm() {
   const [remember, setRemember] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
+      setIsLoading(true);
       const res = await api.post(
         "/auth/login",
         { email, password },
@@ -25,20 +27,18 @@ export default function LoginForm() {
       const { accessToken, role, name } = res.data;
 
       if (remember) {
-        // 👇 store using correct key
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("role", role);
         localStorage.setItem("userName", name);
       }
 
-      // ❌ REMOVE setAuthToken(accessToken)
-      // Axios interceptor already picks the token from localStorage
-
-      login(accessToken, role, name); // 👈 still update context
+      login(accessToken, role, name);
       navigate("/");
     } catch (err) {
       console.error(err);
       setError("Neteisingi prisijungimo duomenys.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,7 +77,11 @@ export default function LoginForm() {
 
         {error && <div className="form-error">{error}</div>}
 
-        <button type="submit" className="btn btn-primary btn-full">
+        <button
+          type="submit"
+          className={"btn btn-primary btn-full" + isLoading ? "isloading" : ""}
+          disabled={isLoading}
+        >
           Prisijungti
         </button>
       </form>

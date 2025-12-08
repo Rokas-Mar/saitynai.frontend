@@ -587,6 +587,10 @@ input[type="number"]:focus {
   margin-top: 20px;
 }
 
+.isloading {
+  filter: grayscale(20%);
+}
+
 @media (max-width: 768px) {
   .nav {
     position: absolute;
