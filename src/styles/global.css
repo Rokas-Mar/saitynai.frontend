@@ -684,3 +684,71 @@ input[type="number"]:focus {
     margin-top: 0.6rem;
   }
 }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.form-grid .full-width {
+  grid-column: span 2;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .form-grid input,
+  .form-grid select,
+  .form-grid textarea {
+    font-size: 14px;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .modal-card {
+    width: 95vw;
+    max-height: 85vh;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal-card {
+    width: 98vw;
+    border-radius: 10px;
+  }
+
+  .form-grid input,
+  .form-grid select {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-actions {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .form-actions button {
+    flex: 1 1 auto;
+    font-size: 0.85rem;
+    padding: 0.45rem 0.7rem;
+  }
+}
+
+.form-grid label input,
+.form-grid label select {
+  margin-top: 2px;
+}
