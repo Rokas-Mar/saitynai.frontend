@@ -175,11 +175,11 @@ export default function OrganisationList() {
               <tbody>
                 {orgs.map((org) => (
                   <tr key={org.id}>
-                    <td>{org.name}</td>
-                    <td>{org.email}</td>
-                    <td>{org.number}</td>
-                    <td>{org.companyCode}</td>
-                    <td className="table-actions">
+                    <td data-label="Name">{org.name}</td>
+                    <td data-label="Email">{org.email}</td>
+                    <td data-label="Number">{org.number}</td>
+                    <td data-label="Company code">{org.companyCode}</td>
+                    <td className="table-actions" data-label="Actions">
                       <Button
                         variant="secondary"
                         className="mr-8"
