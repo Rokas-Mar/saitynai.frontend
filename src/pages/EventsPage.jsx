@@ -169,59 +169,65 @@ export default function EventsPage() {
         {error && <div className="form-error">{error}</div>}
 
         {!loading && (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Date & time</th>
-                <th>Location</th>
-                <th>User</th>
-                <th>Organisation ID</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredEvents.map((evt) => {
-                const user = usersById[evt.userId];
-                return (
-                  <tr key={evt.id}>
-                    <td>{evt.name}</td>
-                    <td>
-                      {evt.date ? new Date(evt.date).toLocaleString() : "-"}
-                    </td>
-                    <td>{evt.location}</td>
-                    <td>
-                      {user ? `${user.name} ${user.surname}` : `#${evt.userId}`}
-                    </td>
-                    <td>{user?.organisationId ?? "-"}</td>
-                    <td className="table-actions">
-                      <Button
-                        variant="secondary"
-                        className="mr-8"
-                        onClick={() => openEditModal(evt)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="danger"
-                        onClick={() => handleDeleteEvent(evt)}
-                      >
-                        Delete
-                      </Button>
+          <div className="table-scroll">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Date & time</th>
+                  <th>Location</th>
+                  <th>User</th>
+                  <th>Organisation ID</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredEvents.map((evt) => {
+                  const user = usersById[evt.userId];
+                  return (
+                    <tr key={evt.id}>
+                      <td data-label="Name">{evt.name}</td>
+                      <td data-label="Date & time">
+                        {evt.date ? new Date(evt.date).toLocaleString() : "-"}
+                      </td>
+                      <td data-label="Location">{evt.location}</td>
+                      <td data-label="User">
+                        {user
+                          ? `${user.name} ${user.surname}`
+                          : `#${evt.userId}`}
+                      </td>
+                      <td data-label="Organisation ID">
+                        {user?.organisationId ?? "-"}
+                      </td>
+                      <td className="table-actions" data-label="Actions">
+                        <Button
+                          variant="secondary"
+                          className="mr-8"
+                          onClick={() => openEditModal(evt)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="danger"
+                          onClick={() => handleDeleteEvent(evt)}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+
+                {filteredEvents.length === 0 && !loading && (
+                  <tr>
+                    <td colSpan="6" className="text-muted">
+                      No events found.
                     </td>
                   </tr>
-                );
-              })}
-
-              {filteredEvents.length === 0 && !loading && (
-                <tr>
-                  <td colSpan="6" className="text-muted">
-                    No events found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 

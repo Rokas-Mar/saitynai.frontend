@@ -75,24 +75,28 @@ export default function OrganisationDetailsPage() {
                 </h4>
 
                 {user.events?.length > 0 ? (
-                  <table className="data-table mt-8">
-                    <thead>
-                      <tr>
-                        <th>Event Name</th>
-                        <th>Date</th>
-                        <th>Location</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {user.events.map((e) => (
-                        <tr key={e.id}>
-                          <td>{e.name}</td>
-                          <td>{new Date(e.date).toLocaleString()}</td>
-                          <td>{e.location}</td>
+                  <div className="table-scroll mt-8">
+                    <table className="data-table">
+                      <thead>
+                        <tr>
+                          <th>Event Name</th>
+                          <th>Date</th>
+                          <th>Location</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {user.events.map((e) => (
+                          <tr key={e.id}>
+                            <td data-label="Event Name">{e.name}</td>
+                            <td data-label="Date">
+                              {new Date(e.date).toLocaleString()}
+                            </td>
+                            <td data-label="Location">{e.location}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 ) : (
                   <p className="text-muted mt-4">No events for this user.</p>
                 )}

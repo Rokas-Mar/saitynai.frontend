@@ -170,54 +170,58 @@ export default function UsersPage() {
         {error && <div className="form-error">{error}</div>}
 
         {!loading && (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Organisation</th>
-                <th>Phone</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map((u) => (
-                <tr key={u.id}>
-                  <td>{u.name}</td>
-                  <td>{u.surname}</td>
-                  <td>{u.email}</td>
-                  <td>{u.role}</td>
-                  <td>{orgNameById[u.organisationId] ?? "-"}</td>
-                  <td>{u.number}</td>
-                  <td className="table-actions">
-                    <Button
-                      variant="secondary"
-                      className="mr-8"
-                      onClick={() => openEditModal(u)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteUser(u)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-
-              {filteredUsers.length === 0 && !loading && (
+          <div className="table-scroll">
+            <table className="data-table">
+              <thead>
                 <tr>
-                  <td colSpan="7" className="text-muted">
-                    No users found.
-                  </td>
+                  <th>Name</th>
+                  <th>Surname</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Organisation</th>
+                  <th>Phone</th>
+                  <th>Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredUsers.map((u) => (
+                  <tr key={u.id}>
+                    <td data-label="Name">{u.name}</td>
+                    <td data-label="Surname">{u.surname}</td>
+                    <td data-label="Email">{u.email}</td>
+                    <td data-label="Role">{u.role}</td>
+                    <td data-label="Organisation">
+                      {orgNameById[u.organisationId] ?? "-"}
+                    </td>
+                    <td data-label="Phone">{u.number}</td>
+                    <td className="table-actions" data-label="Actions">
+                      <Button
+                        variant="secondary"
+                        className="mr-8"
+                        onClick={() => openEditModal(u)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDeleteUser(u)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+
+                {filteredUsers.length === 0 && !loading && (
+                  <tr>
+                    <td colSpan="7" className="text-muted">
+                      No users found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
